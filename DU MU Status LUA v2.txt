@@ -1,0 +1,137 @@
+--[[
+MU Status
+by Immortallis
+ver 2.0
+
+Install this on a Programming Board - unit - onStart()
+Link Programming Board to a Screen - name the slot = screen
+Link the MU and name the slot = MU
+Optional - Link a light and  name the slot = light
+--]]
+
+-- ------------------------------------------------------------------------------------------- #
+-- Tordan's ore table
+--------------------------------------------------------------------------------------------- #
+
+ore ={} --a table of ores
+
+ore[262147665] = {id = 262147665, name = 'AluminiumOre', displayName = 'Bauxite', icon = 'assets.prod.novaquark.com/70186/2a660dc9-9af6-4f4b-87d3-bba4defb1964.png', tier = 1}
+ore[299255727] = {id = 299255727, name = 'CarbonOre', displayName = 'Coal', icon = 'assets.prod.novaquark.com/70186/edc9f97e-7359-454e-8ba9-8f960037ae9b.png', tier = 1}
+ore[4234772167] = {id = 4234772167, name = 'IronOre', displayName = 'Hematite', icon = 'assets.prod.novaquark.com/70186/4ff8e9b7-5ed8-4b62-9b02-219219081efa.png', tier = 1}
+ore[3724036288] = {id = 3724036288, name = 'SiliconOre', displayName = 'Quartz', icon = 'assets.prod.novaquark.com/70186/a8d1c39e-d3d3-4a75-bce1-348036588108.png', tier = 1}
+ore[2289641763] = {id = 2289641763, name ='CopperOre', displayName = 'Malachite', icon = 'assets.prod.novaquark.com/45824/36e5a9ca-c9f6-4e66-b2f4-fe64c9289224.png', tier = 2}
+ore[2029139010] = {id = 2029139010, name = 'ChromiumOre', displayName = 'Chromite', icon = 'assets.prod.novaquark.com/70186/b7357f8d-43ce-4279-a7d3-75fb6fda4fcd.png', tier = 2}
+ore[3086347393] = {id = 3086347393, name = 'CalciumOre' ,displayName = 'Limestone', icon = 'assets.prod.novaquark.com/70186/dc16bf83-bc00-42b3-8f71-1683e8350efb.png', tier = 2}
+ore[343766315] = {id = 343766315, name='SodiumOre', displayName = 'Natron', icon = 'assets.prod.novaquark.com/70186/cec7c516-9f70-4b2b-9d60-6f9527ae36a8.png', tier = 2}
+ore[1050500112] = {id = 1050500112, name = 'SilverOre', displayName = 'Acanthite', icon = 'assets.prod.novaquark.com/70186/e5246f30-14b3-4bf8-bfc1-9bf20a40ed6e.png', tier = 3}
+ore[1065079614] = {id = 1065079614, name = 'NickleOre', displayName = 'Garnierite', icon = 'assets.prod.novaquark.com/70186/b8a8443d-374d-4df2-b289-bfe69105a962.png', tier = 3}
+ore[3837858336] = {id = 3837858336, name = 'LithiumOre', displayName = 'Petalite', icon = 'assets.prod.novaquark.com/70186/3ce3c407-4cfc-4c90-9258-c7af0a5bcf97.png', tier = 3}
+ore[4041459743] = {id = 4041459743, name = 'SulfurOre', displayName = 'Pyrite', icon = 'assets.prod.novaquark.com/70186/0423117d-8754-470c-873c-9b56bf3b9ae2.png', tier = 3}
+ore[3546085401] = {id = 3546085401, name ='CobaltOre', displayName = 'Cobaltite', icon = 'assets.prod.novaquark.com/70186/a1e3cbd0-c1c1-423d-abea-bf89fbbeb936.png', tier = 4}
+ore[1866812055] = {id = 1866812055, name = 'GoldOre', displayName = 'Gold', icon = 'assets.prod.novaquark.com/70186/335baaee-7651-4b90-9e5a-290950ed0f5a.png', tier = 4}
+ore[1467310917] = {id = 1467310917, name = 'FluorineOre', displayName = 'Cryolite', icon = 'assets.prod.novaquark.com/70186/54c5acf2-7c0c-4154-b38c-ffe22d349b80.png', tier = 4}
+ore[271971371] = {id = 271971371, name = 'ScandiumOre', displayName = 'Kolbeckite', icon = 'assets.prod.novaquark.com/70186/c4d32953-9bfb-4586-974d-de0a2ea0f954.png', tier = 4}
+ore[789110817] = {id = 789110817, name= 'NiobiumOre', displayName = 'Columbite', icon = 'assets.prod.novaquark.com/70186/891cbe02-e34c-4473-9cac-65ba67075e47.png', tier = 5}
+ore[629636034] = {id = 629636034, name = 'TitaniumOre', displayName = 'Ilmenite', icon = 'assets.prod.novaquark.com/70186/13f64ee1-4c8d-40bb-9eff-605e6e6e681f.png', tier = 5}
+ore[3934774987] = {id = 3934774987, name = 'ManganeseOre', displayName = 'Rhodonite', icon = 'assets.prod.novaquark.com/70186/a2f5af65-de9e-4b49-a752-a47a42eca4e9.png', tier = 5}
+ore[2162350405] = {id = 2162350405, name = 'VanadiumOre', displayName = 'Vanadinite', icon = 'assets.prod.novaquark.com/70186/34804219-fcbb-4900-9358-77688ef535fe.png', tier = 5}
+ore[1652978615] = {id = 1652978615, name = 'ThoramineOre', displayName = 'Thoramine', icon = 'assets.prod.novaquark.com/70186/d31d5c49-80d1-4d4e-aa87-9e15d161992b.png', tier = 5}
+
+-- ------------------------------------------------------------------------------------------- #
+
+function getMUStatusColor(state, integer)
+  if state == 2 then
+    return "0,5,0"    --Green
+  else
+    return "5,0,0"    --Red
+  end
+end    
+    
+function getMUStatus(state, integer)
+  if state == 2 then
+    return "RUNNING"
+  else
+    return "STOPPED"
+  end
+end    
+
+function getMUProdRateColor(prodRate, integer)
+  if prodRate < 1 then
+    return "5,0,0"    --Red
+  else    
+    return "5,5,5"    --White
+  end
+end
+
+function getMUCalibColor(calibRate, integer)
+  GreenThreshold = 75 --export local GreenThreshold = 75
+  YellowThreshold = 50 --export local YellowThreshold = 50
+  if calibRate >= GreenThreshold and muStatusColor == "0,5,0" then
+    return "0,5,0"       --Green
+  elseif calibRate >= YellowThreshold and muStatusColor == "0,5,0" then
+    return "5,5,0"       --Yellow
+  else    
+    return "5,0,0"       --Red
+  end
+end
+
+-- Gather MU Info
+muId = MU.getActiveOre()
+
+muOreImage = ore[muId].icon
+muDisplayName = ore[muId].displayName
+muTier = ore[muId].tier
+
+muStatusColor = getMUStatusColor(MU.getState())
+muStatus = getMUStatus(MU.getState())
+
+muProdRate = math.floor(MU.getProductionRate())
+muProdRateColor = getMUProdRateColor(muProdRate)
+
+muCalibRate = math.floor(MU.getCalibrationRate()*100)
+muCalibColor = getMUCalibColor(muCalibRate)
+
+-- Optional Light Indicator
+lightIndicator = "Y" --export local lightIndicator = N
+if lightIndicator == "Y" then
+    light.activate()
+    if muStatusColor == "0,5,0" and muCalibColor == "0,5,0" then
+        light.setRGBColor(0,0.5,0)
+    elseif muStatusColor == "0,5,0" and muCalibColor == "5,5,0" then
+        light.setRGBColor(0.5,0.5,0)
+    else
+        light.setRGBColor(0.5,0,0)
+    end
+end
+
+backgroundImage = "assets.prod.novaquark.com/16944/f1c2e89d-bcdb-44bf-ab5b-fb1f770d8f2c.jpg" --export local backgroundImage
+
+screen.activate()
+screen.setRenderScript([[    
+    local rx, ry = getResolution()
+    
+    bglayer = createLayer()
+    local bgimage = loadImage(']] .. backgroundImage .. [[')
+    addImage(bglayer, bgimage, 0, 0, rx, ry)
+    
+    imglayer = createLayer()
+    local image = loadImage(']] .. muOreImage .. [[')
+    addImage(imglayer, image, rx*0.2, ry*0.1, rx*0.6, ry*0.9)
+    
+    local font = loadFont("Play-Bold", 75)
+    local font2 = loadFont("Play-Bold", 35)
+    layer = createLayer()
+    
+    setDefaultTextAlign(layer, AlignH_Center, AlignV_Baseline)
+    addText(layer, font2, "∞ Infinity", rx*0.9, ry*0.05)
+    addText(layer, font2, "Corporation", rx*0.9, ry*0.10)
+    
+    setNextFillColor(layer,]] .. muCalibColor .. [[, 0.2)
+    addCircle(layer, rx*0.5, ry*0.85, 40)
+
+    setDefaultTextAlign(layer, AlignH_Center, AlignV_Baseline)
+    addText(layer, font, "]] .. muDisplayName .. [[", rx*0.5, ry*0.4)
+    addText(layer, font, "  ]] .. muProdRate .. [[ L/h", rx*0.5, ry*0.55)    
+    addText(layer, font, "    ]] .. muCalibRate .. [[%", rx*0.5, ry*0.7)
+        
+]])
